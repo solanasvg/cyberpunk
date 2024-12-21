@@ -1,0 +1,155 @@
+<html><head><base href="https://codebeautify.org" />
+<title>Cyberpunk 2077 - Low Budget Edition</title>
+<style>
+  body {
+    margin: 0;
+    overflow: hidden;
+    background: #000;
+    font-family: 'Orbitron', sans-serif;
+    color: #0ff;
+  }
+  
+  .cyber-container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(45deg, #000, #1a0026);
+    overflow: hidden;
+  }
+  
+  .glitch-text {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 3em;
+    text-shadow: 2px 2px #f0f, -2px -2px #0ff;
+    animation: glitch 1s infinite;
+  }
+  
+  .cyber-character {
+    position: absolute;
+    bottom: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 300px;
+    background: linear-gradient(transparent, #0ff);
+    clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+  }
+  
+  .neon-grid {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: 
+      linear-gradient(#0ff1 1px, transparent 1px),
+      linear-gradient(90deg, #0ff1 1px, transparent 1px);
+    background-size: 50px 50px;
+    animation: gridMove 20s linear infinite;
+  }
+  
+  .floating-numbers {
+    position: absolute;
+    font-family: monospace;
+    color: #0ff;
+    opacity: 0.5;
+    animation: float 5s linear infinite;
+  }
+  
+  @keyframes glitch {
+    0% { transform: translateX(-50%) skew(0deg); }
+    20% { transform: translateX(-52%) skew(10deg); }
+    40% { transform: translateX(-48%) skew(-10deg); }
+    60% { transform: translateX(-50%) skew(5deg); }
+    80% { transform: translateX(-51%) skew(-5deg); }
+    100% { transform: translateX(-50%) skew(0deg); }
+  }
+  
+  @keyframes gridMove {
+    from { transform: translateZ(0); }
+    to { transform: translateZ(1000px); }
+  }
+  
+  @keyframes float {
+    0% { transform: translateY(0) translateX(0); opacity: 0; }
+    50% { opacity: 0.5; }
+    100% { transform: translateY(-100vh) translateX(50px); opacity: 0; }
+  }
+
+  .stats {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    border: 1px solid #0ff;
+    padding: 10px;
+    background: rgba(0,0,0,0.7);
+  }
+
+  .weapon {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    width: 100px;
+    height: 50px;
+    border: 2px solid #0ff;
+    transform: skew(-20deg);
+    animation: weaponGlow 2s infinite;
+  }
+
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="cyber-container">
+  <div class="neon-grid"></div>
+  <h1 class="glitch-text">CYBERPUNK 2077</h1>
+  <div class="cyber-character"></div>
+  
+  <div class="stats">
+    HP: |||||||||||<br>
+    STAMINA: ||||||||<br>
+    CREDITS: 69
+  </div>
+  
+  <div class="weapon"></div>
+
+  <div id="numbers"></div>
+</div>
+
+<script>
+// Generate floating numbers
+function createFloatingNumber() {
+  const numbers = document.getElementById('numbers');
+  const number = document.createElement('div');
+  number.className = 'floating-numbers';
+  number.style.left = Math.random() * window.innerWidth + 'px';
+  number.style.top = window.innerHeight + 'px';
+  number.textContent = Math.floor(Math.random() * 2);
+  numbers.appendChild(number);
+  
+  setTimeout(() => {
+    number.remove();
+  }, 5000);
+}
+
+// Create floating numbers periodically
+setInterval(createFloatingNumber, 200);
+
+// Add simple keyboard movement for the character
+const character = document.querySelector('.cyber-character');
+let position = 50;
+
+document.addEventListener('keydown', (e) => {
+  if(e.key === 'ArrowLeft' && position > 0) {
+    position -= 2;
+  }
+  if(e.key === 'ArrowRight' && position < 100) {
+    position += 2;
+  }
+  character.style.left = position + '%';
+});
+
+</script>
+</body></html>
